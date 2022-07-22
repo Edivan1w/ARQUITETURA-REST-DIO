@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.dio.entity.Produto;
-import br.com.dio.exceptions.ProdutoNullException;
 import br.com.dio.service.ProdutoService;
 
 @RestController
@@ -23,10 +22,8 @@ public class ProdutoController {
 	private ProdutoService service;
 
 	@PostMapping(value = "/save")
-	public ResponseEntity<Produto> salvaProduto(@RequestBody Produto produto) {
-        if(produto.getNome() == null) {
-        	throw new ProdutoNullException();
-        }
+	public ResponseEntity<Produto> salvaProduto(@RequestBody Produto produto) throws Exception {
+
 		produto = service.save(produto);
 
 		return ResponseEntity.ok().body(produto);
